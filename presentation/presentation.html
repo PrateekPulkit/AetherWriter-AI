@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AetherWriter AI | V5.0 Class Project</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400..800&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #020617;
+            --accent: #3b82f6;
+            --bg: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --border: rgba(59, 130, 246, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg);
+            color: #1e293b;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- V4.0 DYNAMIC ALIVE BACKGROUND --- */
+        .animated-bg {
+            position: fixed; inset: 0;
+            background: radial-gradient(circle at 10% 10%, #f0f9ff 0%, #ffffff 100%);
+            z-index: -2; overflow: hidden;
+        }
+
+        .mouse-aura {
+            position: fixed; width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+            border-radius: 50%; pointer-events: none; z-index: -1;
+            transform: translate(-50%, -50%); transition: transform 0.15s ease-out;
+        }
+
+        .blob {
+            position: absolute; filter: blur(100px); border-radius: 50%; opacity: 0.2;
+            animation: drift 25s infinite alternate ease-in-out; pointer-events: none;
+        }
+        .blob-1 { width: 60vw; height: 60vw; top: -20%; right: -10%; background: #bae6fd; }
+        .blob-2 { width: 50vw; height: 50vw; bottom: -15%; left: -5%; background: #bfdbfe; animation-delay: -7s; }
+
+        @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(100px, 150px) scale(1.1); } }
+
+        .particles-container { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+        .particle {
+            position: absolute; background: var(--accent); border-radius: 50%;
+            opacity: 0.15; animation: rise var(--duration) linear infinite;
+        }
+        @keyframes rise { from { transform: translateY(110vh) scale(0); opacity: 0; } to { transform: translateY(-10vh) scale(1.6); opacity: 0; } }
+
+        /* --- Slider Logic --- */
+        .presentation-container {
+            width: 100vw; height: 100vh;
+            scroll-snap-type: x mandatory; display: flex;
+            overflow-x: scroll; scrollbar-width: none;
+            z-index: 10;
+        }
+        .presentation-container::-webkit-scrollbar { display: none; }
+
+        .slide { flex: 0 0 100vw; height: 100vh; scroll-snap-align: start; display: flex; align-items: center; justify-content: center; padding: 4rem; }
+
+        .slide-content {
+            width: 100%; max-width: 1240px; height: 86vh;
+            background: var(--card-bg); backdrop-filter: blur(40px);
+            border: 1px solid var(--border); border-radius: 40px;
+            display: grid; grid-template-columns: 45% 55%;
+            padding: 5rem; gap: 4rem;
+            box-shadow: 0 40px 100px rgba(59, 130, 246, 0.12);
+            position: relative; overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .slide-content:hover { transform: translateY(-8px); border-color: rgba(59, 130, 246, 0.4); }
+
+        h1 { 
+            font-family: 'EB Garamond', serif; font-size: 5.5rem; font-weight: 500; line-height: 0.95; 
+            margin-bottom: 2rem; color: var(--primary);
+            background: linear-gradient(135deg, #020617 0%, #3b82f6 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        h2 { font-family: 'EB Garamond', serif; font-size: 3.8rem; font-weight: 500; margin-bottom: 1.5rem; color: var(--primary); }
+
+        .sub-heading { font-size: 0.85rem; font-weight: 800; letter-spacing: 5px; color: var(--accent); margin-bottom: 1.2rem; text-transform: uppercase; }
+
+        p { font-size: 1.3rem; color: #64748b; line-height: 1.7; margin-bottom: 2rem; }
+
+        .list-items li { margin-bottom: 1.5rem; display: flex; align-items: flex-start; gap: 1.5rem; font-size: 1.35rem; color: #1e293b; list-style: none; }
+        .icon { color: var(--accent); flex-shrink: 0; margin-top: 5px; filter: drop-shadow(0 0 5px var(--accent)); }
+
+        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; width: 100%; }
+        .feature-item { 
+            background: white; padding: 22px; border-radius: 20px; border: 1px solid var(--border); 
+            display: flex; flex-direction: column; gap: 10px; transition: 0.3s;
+        }
+        .feature-item:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(59, 130, 246, 0.08); }
+
+        .stat-badge { font-size: 3rem; font-weight: 800; color: var(--accent); }
+        .tag { font-size: 0.75rem; background: rgba(59, 130, 246, 0.1); color: var(--accent); padding: 4px 12px; border-radius: 8px; font-weight: 700; text-transform: uppercase; }
+
+        /* Progress */
+        .progress-bar { position: fixed; bottom: 3.5rem; left: 50%; transform: translateX(-50%); display: flex; gap: 14px; z-index: 100; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(59, 130, 246, 0.2); transition: 0.5s; }
+        .dot.active { background: var(--accent); transform: scale(1.8) translateY(-2px); }
+
+        .slide-marker { position: absolute; top: 4rem; left: 5rem; font-size: 0.85rem; font-weight: 800; color: var(--accent); opacity: 0.7; letter-spacing: 5px; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+
+    <div class="animated-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="mouse-aura" id="mouseAura"></div>
+        <div class="particles-container" id="particles"></div>
+    </div>
+
+    <div class="presentation-container" id="container">
+        
+        <!-- Slide 1: Welcome -->
+        <section class="slide">
+            <div class="slide-content">
+                <div class="slide-marker">INTRO 01</div>
+                <div class="slide-left">
+                    <span class="sub-heading">CLASS PROJECT</span>
+                    <h1>AetherWriter <span style="color: var(--accent); -webkit-text-fill-color: var(--accent)">AI</span></h1>
+                    <p>An AI-powered writing assistant that runs completely offline on your local machine, keeping all your data private while checking grammar and readability.</p>
+                </div>
+                <div class="slide-right">
+                    <img src="C:/Users/prate/.gemini/antigravity/brain/17e13c98-63b9-4b8e-9b30-b5d8e5fca72d/aetherwriter_core_visual_1777039878773.png" style="width: 100%; border-radius: 30px; box-shadow: 0 20px 60px rgba(59, 130, 246, 0.2);" alt="Neural Core Visual">
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 2: The Group -->
+        <section class="slide">
+            <div class="slide-content">
+                <div class="slide-marker">THE TEAM 02</div>
+                <div class="slide-left">
+                    <h2>Our <span style="color: var(--accent)">Team</span></h2>
+                    <p>We divided the project into different parts—from machine learning to frontend design—so everyone could focus on a specific challenge.</p>
+                    <div style="margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1rem;">
+                        <span class="tag">PROJECT GOAL</span>
+                        <p style="font-size: 1rem; margin-top: 1rem;">Building an advanced AI text editor that doesn't rely on cloud APIs, so everything processes locally and fast.</p>
+                    </div>
+                </div>
+                <div class="slide-right">
+                    <div class="feature-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                        <div class="feature-item"><b>Prateek</b><span style="font-size: 0.75rem; color: var(--accent); font-family: monospace;">AP23110011175</span></div>
+                        <div class="feature-item"><b>Lahari</b><span style="font-size: 0.75rem; color: var(--accent); font-family: monospace;">AP23110011034</span></div>
+                        <div class="feature-item"><b>Srinadh</b><span style="font-size: 0.75rem; color: var(--accent); font-family: monospace;">AP23110011171</span></div>
+                        <div class="feature-item"><b>Jyoshna</b><span style="font-size: 0.75rem; color: var(--accent); font-family: monospace;">AP23110011145</span></div>
+                        <div class="feature-item"><b>Abhinay</b><span style="font-size: 0.75rem; color: var(--accent); font-family: monospace;">AP23110010999</span></div>
+                        <div class="feature-item"><b>Harshit</b><span style="font-size: 0.75rem; color: var(--accent); font-family: monospace;">AP231100XXXXX</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: The Challenge -->
+        <section class="slide">
+            <div class="slide-content">
+                <div class="slide-marker">THE PROBLEM 03</div>
+                <div class="slide-left">
+                    <h2>Why Run <span style="color: var(--accent)">Locally?</span></h2>
+                    <p>Most writing tools send your text to someone else's server. We wanted to build something that keeps your writing totally private.</p>
+                    <div class="feature-item" style="background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.1);">
+                        <b style="color: #ef4444;">THE ISSUE:</b>
+                        <p style="font-size: 0.9rem; margin: 0;">Cloud-based tools compromise privacy and usually require a constant internet connection to work.</p>
+                    </div>
+                </div>
+                <div class="slide-right">
+                    <ul class="list-items">
+                        <li><i data-lucide="shield-alert" size="28" class="icon"></i> <div><b>Privacy Fix:</b><br/><small>AetherWriter stays 100% local, so no data ever leaves your laptop.</small></div></li>
+                        <li><i data-lucide="cpu" size="28" class="icon"></i> <div><b>Edge Efficiency:</b><br/><small>Large Language Models are usually too heavy. We used lightweight models optimized for student laptops.</small></div></li>
+                        <li><i data-lucide="zap" size="28" class="icon"></i> <div><b>Instant Feedback:</b><br/><small>Waiting for APIs makes typing slow. Local processing fixes grammar instantly.</small></div></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Backend Processing -->
+        <section class="slide">
+            <div class="slide-content">
+                <div class="slide-marker">BACKEND 04</div>
+                <div class="slide-left">
+                    <h2>FastAPI <span style="color: var(--accent)">Backend</span></h2>
+                    <p>To run everything smoothly on a computer, we built the backend API using Python's FastAPI. We also added an LRU cache so repeated sentences load instantly.</p>
+                    <div style="margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div class="tag" style="text-align: center;">FastAPI</div>
+                        <div class="tag" style="text-align: center;">Async Processing</div>
+                        <div class="tag" style="text-align: center;">LRU Cache System</div>
+                        <div class="tag" style="text-align: center;">Local Server</div>
+                    </div>
+                    <div class="feature-item" style="margin-top: 1rem; background: rgba(34,197,94,0.06); border-color: rgba(34,197,94,0.2);">
+                        <b style="color: #16a34a;">Caching Saves Time (And CPU!):</b>
+                        <p style="font-size: 0.9rem; margin: 0;">Without cache: ~1050ms &nbsp;|&nbsp; With cache: <b>0.08ms</b></p>
+                    </div>
+                </div>
+                <div class="slide-right">
+                    <div style="background: #0f172a; padding: 2rem; border-radius: 20px; font-family: monospace; font-size: 0.88rem; line-height: 2; color: #94a3b8;">
+                        <span style="color: #475569;"># Async Backend Cache Code</span><br/>
+                        <span style="color: #38bdf8;">@app.post</span>(<span style="color: #a3e635;">"/check"</span>)<br/>
+                        <span style="color: #38bdf8;">async def</span> <span style="color: #e2e8f0;">analyze_text</span>(request):<br/>
+                        &nbsp;&nbsp;<span style="color: #475569;"># Check if sentence is in cache already</span><br/>
+                        &nbsp;&nbsp;<span style="color: #38bdf8;">if</span> text <span style="color: #38bdf8;">in</span> cache:<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #38bdf8;">return</span> cache[text]<br/><br/>
+                        <span style="color: #475569;"># Server logs</span><br/>
+                        <span style="color: #4ade80;">[INFO]</span> Cache MISS → Processed in 1047ms<br/>
+                        <span style="color: #4ade80;">[INFO]</span> Cache HIT → <span style="color: #facc15;">Returned in 0.08ms</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Algorithm Innovation -->
+        <section class="slide">
+            <div class="slide-content">
+                <div class="slide-marker">ALGORITHM 05</div>
+                <div class="slide-left">
+                    <h2>Fixing <span style="color: var(--accent)">Index Drift</span></h2>
+                    <p>One major bug we solved: if you fix a typo early in a sentence, the text length changes and messes up the positions of all other highlights down the page.</p>
+                    <div class="feature-item" style="border-left: 6px solid var(--accent);">
+                        <b>The Solution:</b>
+                        <p style="font-size: 0.9rem; margin: 0;">We wrote a <i>Backwards Mapping</i> algorithm that processes text corrections from the end of the text to the beginning, so earlier text positions never 'drift'.</p>
+                    </div>
+                </div>
+                <div class="slide-right">
+                    <div class="feature-grid" style="grid-template-columns: 1fr;">
+                        <div class="feature-item"><b>1. Find Errors</b> <p style="font-size:0.8rem; margin:0; opacity:0.7;">Get all grammar mistakes and their exact indexes.</p></div>
+                        <div class="feature-item"><b>2. Sort Backwards</b> <p style="font-size:0.8rem; margin:0; opacity:0.7;">Order them from the end of the paragraph first.</p></div>
+                        <div class="feature-item"><b>3. Apply Fixes</b> <p style="font-size:0.8rem; margin:0; opacity:0.7;">Make changes without drifting the rest of the text!</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Hybrid Neural Core -->
+        <section class="slide">
+            <div class="slide-content">
+                <div class="slide-marker">MACHINE LEARNING 06</div>
+                <div class="slide-left">
+                    <h2>Our Hybrid <span style="color: var(--accent)">AI Core</span></h2>
+                    <p>Running big ML models on a laptop is really slow. So we added a fast, lightweight "BERT-Tiny" model to quickly find errors before doing any heavy processing.</p>
+                    <div style="background: var(--primary); color: white; padding: 25px; border-radius: 20px;">
+                        <span style="color: var(--accent); font-weight: 800; font-size: 0.8rem;">HOW IT WORKS:</span>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 0.95rem; margin: 10px 0;">Step 1: Check text with simple regex rules.<br/>Step 2: BERT-Tiny finds tricky grammar issues.<br/>Step 3: Only run the heavy T5 model if needed to save CPU!</p>
+                    </div>
+                </div>
+                <div class="slide-right">
+                    <img src="C:/Users/prate/.gemini/antigravity/brain/17e13c98-63b9-4b8e-9b30-b5d8e5fca72d/neural_network_diagram_1777039894395.png" style="width: 100%; border-radius: 30px; border: 1px solid var(--border);" alt="Neural Architecture">
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Training -->
+        <section class="slide">
+            <div class="slide-content">
+                <div class="slide-marker">TRAINING 07</div>
+                <div class="slide-left">
+                    <h2>Training <span style="color: var(--accent)">the Model</span></h2>
+                    <p>We trained our model on open datasets containing real human typing mistakes to make sure it actually understands how people mess up.</p>
+                    <div class="feature-item" style="border-left: 6px solid var(--accent);">
+                        <b>5-Fold Cross-Validation:</b>
+                        <p style="font-size: 0.95rem; margin: 0; line-height: 1.6;">
+                            Instead of just training it once, we split our data into 5 parts. We trained and tested it over and over to make sure it was actually smart, getting a final accuracy of <b>98.9%</b>!
+                        </p>
+                    </div>
+                </div>
+                <div class="slide-right">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="feature-item">
+                            <b style="color: var(--accent);">Real Training Data</b>
+                            <p style="font-size: 1rem;">We grabbed thousands of sentences that actually had bad grammar, rather than just generating fake ones.</p>
+                        </div>
+                        <div class="feature-item" style="background: rgba(59, 130, 246, 0.05);">
+                            <b>Good Accuracy</b>
+                            <p style="font-size: 0.9rem;">By repeating the training process on different slices of the data, we avoided overfitting and hit a very reliable 98% accuracy mark.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: UI Engineering -->
+        <section class="slide">
+            <div class="slide-content">
+                <div class="slide-marker">FRONTEND 08</div>
+                <div class="slide-left">
+                    <h2>Designing <span style="color: var(--accent)">the UI</span></h2>
+                    <p>We built the frontend window using React. Our main goal was to make it look clean and modern while you write, using a 'glassmorphic' background blur.</p>
+                    <div class="feature-item">
+                        <b>User Experience:</b>
+                        <p style="font-size: 0.9rem;">We picked a really nice serif font (EB Garamond) so it's super easy to read and focus on during long typing sessions.</p>
+                    </div>
+                </div>
+                <div class="slide-right">
+                    <ul class="list-items">
+                        <li><i data-lucide="pen-tool" size="24" class="icon"></i> <div><b>Clean Typography:</b><br/><small>Making sure the text editor feels like a neat typing tool.</small></div></li>
+                        <li><i data-lucide="layers" size="24" class="icon"></i> <div><b>Glassmorphism:</b><br/><small>Using background blurring to make the UI look like frosted glass.</small></div></li>
+                        <li><i data-lucide="monitor" size="24" class="icon"></i> <div><b>Responsive:</b><br/><small>Works smoothly whether it's on a big desktop monitor or a laptop screen.</small></div></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 9: Client Performance -->
+        <section class="slide">
+            <div class="slide-content">
+                <div class="slide-marker">PERFORMANCE 09</div>
+                <div class="slide-left">
+                    <h2>Frontend <span style="color: var(--accent)">Efficiency</span></h2>
+                    <p>Since the Python backend sends data super fast, the React frontend has to keep up without lagging or eating all your computer's RAM.</p>
+                    <div class="feature-item" style="background: var(--primary); color: white;">
+                        <b style="color: var(--accent)">MEMORY OPTIMIZATION:</b>
+                        <p style="font-size: 0.9rem; margin: 0;">By managing React state super carefully, we kept the browser tab's memory usage under 650MB.</p>
+                    </div>
+                </div>
+                <div class="slide-right">
+                    <div style="display: flex; flex-direction: column; gap: 18px;">
+                        <div style="background: rgba(34, 197, 94, 0.05); padding: 1.4rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+                            <b>DOM Re-renders Avoided</b><span style="color: #16a34a; font-weight: 800;">Lots!</span>
+                        </div>
+                        <div style="background: rgba(34, 197, 94, 0.05); padding: 1.4rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+                            <b>Real-time Syncing</b><span style="color: #16a34a; font-weight: 800;">Instant</span>
+                        </div>
+                        <p style="font-size: 1rem; color: #64748b; margin-top: 10px;">Instead of refreshing the whole page when an error is found, we just highlight the exact word using precise state updates.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 10: Structural Analytics -->
+        <section class="slide">
+            <div class="slide-content">
+                <div class="slide-marker">ANALYTICS 10</div>
+                <div class="slide-left">
+                    <h2>Readability <span style="color: var(--accent)">Scores</span></h2>
+                    <p>Besides fixing grammar, we wanted the app to tell you if your text is actually easy to read and understand.</p>
+                    <div class="feature-item" style="border-left: 6px solid var(--accent);">
+                        <b>Flesch Reading Ease:</b>
+                        <p style="font-size: 0.9rem; margin: 0;">We wrote a python script that counts the syllables in your words and uses a math formula to give your text a grade level.</p>
+                    </div>
+                </div>
+                <div class="slide-right">
+                    <img src="C:/Users/prate/.gemini/antigravity/brain/17e13c98-63b9-4b8e-9b30-b5d8e5fca72d/linguistic_dashboard_1777039911742.png" style="width: 100%; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.1);" alt="Linguistic Dashboard">
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 11: Academic Integrity -->
+        <section class="slide">
+            <div class="slide-content">
+                <div class="slide-marker">TONE 11</div>
+                <div class="slide-left">
+                    <h2>Tone <span style="color: var(--accent)">Guard</span></h2>
+                    <p>We built a feature called the Tone Guard to help users sound more confident when writing important assignments or essays.</p>
+                    <div class="feature-item" style="background: var(--primary); color: white;">
+                        <b style="color: var(--accent)">CATCHING WEAK WORDS:</b>
+                        <p style="font-size: 0.9rem; margin: 10px 0;">Our code uses Regex to spot "hedge words" like "perhaps", "maybe", or "seems to" and suggests sounding more direct.</p>
+                    </div>
+                </div>
+                <div class="slide-right">
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <b style="color: var(--accent)">No Contractions</b>
+                            <p style="font-size: 0.8rem;">Flags "don't" or "can't" to push for a more formal tone.</p>
+                        </div>
+                        <div class="feature-item">
+                            <b style="color: var(--accent)">Informal Slang</b>
+                            <p style="font-size: 0.8rem;">We added a list of casual words to watch out for.</p>
+                        </div>
+                        <div class="feature-item">
+                            <b style="color: var(--accent)">Confident Voice</b>
+                            <p style="font-size: 0.8rem;">Encourages you to just state the facts clearly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 12: Subjectivity Modeling -->
+        <section class="slide">
+            <div class="slide-content">
+                <div class="slide-marker">SENTIMENT 12</div>
+                <div class="slide-left">
+                    <h2>Checking <span style="color: var(--accent)">Sentiment</span></h2>
+                    <p>We integrated a natural language module to track the overall mood of the writing—whether it's super positive, negative, or perfectly neutral.</p>
+                    <ul class="list-items">
+                        <li><i data-lucide="thermometer" size="24" class="icon"></i> <div><b>Polarity Check:</b><br/><small>Is the tone too angry? Too cheerful? We show a live score.</small></div></li>
+                        <li><i data-lucide="eye" size="24" class="icon"></i> <div><b>Subjectivity:</b><br/><small>Making sure your essay sounds like a report, not an opinion piece.</small></div></li>
+                    </ul>
+                </div>
+                <div class="slide-right">
+                    <div style="background: rgba(59, 130, 246, 0.05); padding: 2rem; border-radius: 24px; border: 1px dashed var(--accent);">
+                        <b style="color: var(--accent)">EXAMPLE:</b>
+                        <p style="font-size: 1rem; line-height: 1.8; margin-top: 1rem;">
+                            "The system was terrible." → <span style="color: #ef4444;">Negative / Opinion</span><br/>
+                            "The system failed 5% of tests." → <span style="color: #10b981;">Neutral / Fact</span>
+                        </p>
+                        <p style="font-size: 0.85rem; opacity: 0.7;">This helps students stay objective in their research papers.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 13: Export Generation -->
+        <section class="slide">
+            <div class="slide-content">
+                <div class="slide-marker">REPORTING 13</div>
+                <div class="slide-left">
+                    <h2>Markdown <span style="color: var(--accent)">Exports</span></h2>
+                    <p>Finally, since we gathered all these cool stats about the text, we added a button to download the data as a report.</p>
+                    <div class="feature-item" style="border-left: 6px solid var(--accent);">
+                        <b>One-Click Export:</b>
+                        <p style="font-size: 0.9rem; margin: 0;">Our script takes the readability scores, grammar errors, and sentiment data, and generates a neat Markdown file so you can view your progress.</p>
+                    </div>
+                </div>
+                <div class="slide-right">
+                    <img src="C:/Users/prate/.gemini/antigravity/brain/17e13c98-63b9-4b8e-9b30-b5d8e5fca72d/research_report_visual_1777039926071.png" style="width: 100%; border-radius: 30px;" alt="Research Reporting visual">
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 14: Conclusion -->
+        <section class="slide">
+            <div class="slide-content" style="grid-template-columns: 1fr; text-align: center; justify-items: center; align-content: center;">
+                <div class="slide-marker">COMPLETE 14</div>
+                <i data-lucide="award" size="120" color="#3b82f6" style="margin-bottom: 2rem;"></i>
+                <h2 style="font-size: 5rem;">AetherWriter <span style="color: var(--accent)">V5.0</span></h2>
+                <p style="max-width: 700px; font-size: 1.5rem;">An offline, local-first AI writing assistant. We combined machine learning, a fast python backend, and a slick React frontend into one complete class project. Thank you!</p>
+                <div style="font-weight: 800; font-size: 1.1rem; color: var(--accent); letter-spacing: 7px; margin-top: 3rem;">
+                    SRM UNIVERSITY | 2026
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 15: Code Demonstration Transition -->
+        <section class="slide">
+            <div class="slide-content" style="grid-template-columns: 1fr; text-align: center; justify-items: center; align-content: center;">
+                <div class="slide-marker">DEMO 15</div>
+                <i data-lucide="code" size="120" color="#3b82f6" style="margin-bottom: 2rem;"></i>
+                <h2 style="font-size: 5rem;">Live <span style="color: var(--accent)">Code Demo</span></h2>
+                <p style="max-width: 700px; font-size: 1.5rem;">That wraps up our slides! We'll now jump straight into the IDE to show you how we built the backend API, the neural models, and our UI components in real-time.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="progress-bar" id="navDots"></div>
+
+    <script>
+        lucide.createIcons();
+
+        const aura = document.getElementById('mouseAura');
+        document.addEventListener('mousemove', (e) => {
+            aura.style.left = `${e.clientX}px`;
+            aura.style.top = `${e.clientY}px`;
+        });
+
+        const particles = document.getElementById('particles');
+        for (let i = 0; i < 70; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const size = Math.random() * 5 + 3;
+            p.style.width = p.style.height = `${size}px`;
+            p.style.left = `${Math.random() * 100}vw`;
+            p.style.setProperty('--duration', `${Math.random() * 9 + 6}s`);
+            p.style.animationDelay = `${Math.random() * 10}s`;
+            particles.appendChild(p);
+        }
+
+        const container = document.getElementById('container');
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') container.scrollBy({ left: window.innerWidth, behavior: 'smooth' });
+            if (e.key === 'ArrowLeft') container.scrollBy({ left: -window.innerWidth, behavior: 'smooth' });
+        });
+
+        const dotsContainer = document.getElementById('navDots');
+        const sections = document.querySelectorAll('section');
+        sections.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = `dot ${i === 0 ? 'active' : ''}`;
+            dotsContainer.appendChild(dot);
+        });
+
+        container.addEventListener('scroll', () => {
+            const index = Math.round(container.scrollLeft / window.innerWidth);
+            document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === index));
+        });
+    </script>
+</body>
+</html>

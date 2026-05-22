@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+pydantic
+scikit-learn
+pandas
+numpy
+nltk
+python-multipart
+transformers
+torch
+sentencepiece
+pytesseract
+Pillow
+textstat
+textblob
+datasets

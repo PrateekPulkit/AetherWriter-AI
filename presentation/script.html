@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AetherWriter V5.0 | Sequential Presentation Script</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --accent: #3b82f6;
+            --text: #f1f5f9;
+            --text-dim: #94a3b8;
+            --prateek: #f87171;
+            --lahari: #34d399;
+            --srinadh: #60a5fa;
+            --jyoshna: #fbbf24;
+            --abhinay: #a78bfa;
+            --harshit: #ec4899;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 30px;
+        }
+
+        h1 { font-size: 2rem; margin-bottom: 10px; color: var(--accent); }
+        .meta { font-size: 0.9rem; color: var(--text-dim); }
+
+        .script-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .slide-card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,0.05);
+            scroll-margin-top: 20px;
+            transition: transform 0.3s;
+        }
+
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+        }
+
+        .slide-num { font-weight: 700; color: var(--accent); font-size: 0.8rem; text-transform: uppercase; }
+        .speaker {
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .speaker.prateek { background: rgba(248, 113, 113, 0.2); color: var(--prateek); }
+        .speaker.lahari { background: rgba(52, 211, 153, 0.2); color: var(--lahari); }
+        .speaker.srinadh { background: rgba(96, 165, 250, 0.2); color: var(--srinadh); }
+        .speaker.jyoshna { background: rgba(251, 191, 36, 0.2); color: var(--jyoshna); }
+        .speaker.abhinay { background: rgba(167, 139, 250, 0.2); color: var(--abhinay); }
+        .speaker.harshit { background: rgba(236, 72, 153, 0.2); color: var(--harshit); }
+
+        .visual-cue {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            font-style: italic;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .lines { font-size: 1.1rem; }
+        .lines b { color: var(--accent); }
+
+        .nav-menu {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: flex;
+            gap: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            z-index: 100;
+            width: 90%;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .nav-item {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .nav-item.active { color: var(--accent); }
+
+        /* Block separation for sequential flow */
+        .speaker-divider {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--text-dim);
+            border-top: 2px dashed rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+            .lines { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Sequential Research Script</h1>
+        <div class="meta">15 Slides + Code Demo • 6 Speakers • Collaborative Engineering Flow</div>
+    </header>
+
+    <div class="script-container">
+        
+        <!-- PRATEEK BLOCK -->
+        <div class="speaker-divider" style="color: var(--prateek)">PRATEEK (Slides 1-3)</div>
+        
+        <div class="slide-card" id="s1">
+            <div class="slide-header">
+                <span class="slide-num">Slide 01: Welcome</span>
+                <span class="speaker prateek">Prateek</span>
+            </div>
+            <span class="visual-cue">Visual: Neural Core Sphere</span>
+            <div class="lines">
+                "Hey everyone, I'm Prateek, and we're super excited to show you our project, <b>AetherWriter V5.0</b>. Basically, it's an AI writing assistant that runs completely offline on your computer, so everything you type stays totally private."
+            </div>
+        </div>
+
+        <div class="slide-card" id="s2">
+            <div class="slide-header">
+                <span class="slide-num">Slide 02: Team</span>
+                <span class="speaker prateek">Prateek</span>
+            </div>
+            <span class="visual-cue">Visual: Team Grid</span>
+            <div class="lines">
+                "We built this as a team. <b>Srinadh, Lahari, Jyoshna, Harshit, Abhinay, and I</b> all worked together on different parts of the project—from training the actual machine learning models to connecting everything to a fast backend."
+            </div>
+        </div>
+
+        <div class="slide-card" id="s3">
+            <div class="slide-header">
+                <span class="slide-num">Slide 03: System Vision</span>
+                <span class="speaker prateek">Prateek</span>
+            </div>
+            <span class="visual-cue">Visual: Privacy & Architecture</span>
+            <div class="lines">
+                "My main focus was figuring out the overall architecture. We realized most grammar tools send all your data to the cloud, which isn't great for privacy. So, my goal was to design a system where we could run heavy AI models locally, and I worked with Srinadh to get the backend set up for that."
+            </div>
+        </div>
+
+        <!-- SRINADH BLOCK -->
+        <div class="speaker-divider" style="color: var(--srinadh)">SRINADH (Slides 4-5)</div>
+
+        <div class="slide-card" id="s4">
+            <div class="slide-header">
+                <span class="slide-num">Slide 04: Backend Processing</span>
+                <span class="speaker srinadh">Srinadh</span>
+            </div>
+            <span class="visual-cue">Visual: Python Async Code</span>
+            <div class="lines">
+                "Thanks Prateek. I'm Srinadh, and I worked on the backend. To make Prateek's local-first idea work without lagging, I used FastAPI. I also added a <b>caching system</b> so that if you type the same sentence twice, it loads instantly instead of rerunning the whole AI model."
+            </div>
+        </div>
+
+        <div class="slide-card" id="s5">
+            <div class="slide-header">
+                <span class="slide-num">Slide 05: Algorithm Innovation</span>
+                <span class="speaker srinadh">Srinadh</span>
+            </div>
+            <span class="visual-cue">Visual: Index Drift Explainer</span>
+            <div class="lines">
+                "One big problem we ran into was something called 'Index Drift.' When you correct a word early in a paragraph, it messes up the positions for the rest of the corrections. I wrote a <b>backwards-mapping algorithm</b> to process edits from the end to the start, which fixed the issue completely."
+            </div>
+        </div>
+
+        <!-- LAHARI BLOCK -->
+        <div class="speaker-divider" style="color: var(--lahari)">LAHARI (Slides 6-7)</div>
+
+        <div class="slide-card" id="s6">
+            <div class="slide-header">
+                <span class="slide-num">Slide 06: Hybrid Architecture</span>
+                <span class="speaker lahari">Lahari</span>
+            </div>
+            <span class="visual-cue">Visual: Neural Architecture Diagram</span>
+            <div class="lines">
+                "Hey, I'm Lahari. My part of the project was the Machine Learning side. I set up our <b>Hybrid Neural Core</b>. Basically, we use a lightweight BERT model to quickly check if a sentence even has an error before passing it to the heavier models. This saves a ton of processing power."
+            </div>
+        </div>
+
+        <div class="slide-card" id="s7">
+            <div class="slide-header">
+                <span class="slide-num">Slide 07: Training & Validation</span>
+                <span class="speaker lahari">Lahari</span>
+            </div>
+            <span class="visual-cue">Visual: 5-Fold Training Stats</span>
+            <div class="lines">
+                "To make sure our model was actually accurate, I trained it using a <b>5-Fold Cross-Validation</b> method. We split our data into five parts, trained it over and over, and managed to get a 98.9% accuracy rate. It was a lot of trial and error, but it gave Jyoshna's frontend a solid base to work with."
+            </div>
+        </div>
+
+        <!-- JYOSHNA BLOCK -->
+        <div class="speaker-divider" style="color: var(--jyoshna)">JYOSHNA (Slides 8-9)</div>
+
+        <div class="slide-card" id="s8">
+            <div class="slide-header">
+                <span class="slide-num">Slide 08: UI Engineering</span>
+                <span class="speaker jyoshna">Jyoshna</span>
+            </div>
+            <span class="visual-cue">Visual: Glassmorphic Dashboard</span>
+            <div class="lines">
+                "Thanks Lahari! I'm Jyoshna, and I handled the UI and Frontend. We wanted the app to look really clean and modern, so I went with this glassmorphic design and a nice serif font to make it easy to read when you're working on long documents."
+            </div>
+        </div>
+
+        <div class="slide-card" id="s9">
+            <div class="slide-header">
+                <span class="slide-num">Slide 09: Client Performance</span>
+                <span class="speaker jyoshna">Jyoshna</span>
+            </div>
+            <span class="visual-cue">Visual: Speed Benchmarks</span>
+            <div class="lines">
+                "But it wasn't just about making it look pretty. Since Srinadh's backend is sending data really fast, I had to optimize the React code. I made sure the browser only updates exactly what it needs to, keeping the memory usage low so the app doesn't crash or lag."
+            </div>
+        </div>
+
+        <!-- HARSHIT BLOCK -->
+        <div class="speaker-divider" style="color: var(--harshit)">HARSHIT (Slides 10-11)</div>
+
+        <div class="slide-card" id="s10">
+            <div class="slide-header">
+                <span class="slide-num">Slide 10: Structural Analytics</span>
+                <span class="speaker harshit">Harshit</span>
+            </div>
+            <span class="visual-cue">Visual: Analytics Dashboard</span>
+            <div class="lines">
+                "Hey guys, I'm Harshit, and I built the Linguistic Analytics part. Besides just fixing grammar, I wrote formulas to calculate <b>readability scores</b>—like the Flesch Reading Ease—so users can see if their writing is too complicated or too simple."
+            </div>
+        </div>
+
+        <div class="slide-card" id="s11">
+            <div class="slide-header">
+                <span class="slide-num">Slide 11: Academic Integrity</span>
+                <span class="speaker harshit">Harshit</span>
+            </div>
+            <span class="visual-cue">Visual: Academic Tone Stats</span>
+            <div class="lines">
+                "I also worked on what we call the <b>Academic Tone Guard</b>. Basically, it scans your text for weak words like 'perhaps' or 'maybe' that make you sound unsure, and warns you about them. I worked with Abhinay to tie these rules into his sentiment tracker."
+            </div>
+        </div>
+
+        <!-- ABHINAY BLOCK -->
+        <div class="speaker-divider" style="color: var(--abhinay)">ABHINAY (Slides 12-14)</div>
+
+        <div class="slide-card" id="s12">
+            <div class="slide-header">
+                <span class="slide-num">Slide 12: Subjectivity Modeling</span>
+                <span class="speaker abhinay">Abhinay</span>
+            </div>
+            <span class="visual-cue">Visual: Sentiment Heatmap</span>
+            <div class="lines">
+                "Thanks Harshit. I'm Abhinay, and I focused on Sentiment Analysis and Reporting. Taking what Harshit did a step further, I added a feature that actually checks the tone of your writing to see if it's too positive or negative, which is super useful for keeping an objective tone."
+            </div>
+        </div>
+
+        <div class="slide-card" id="s13">
+            <div class="slide-header">
+                <span class="slide-num">Slide 13: Export Generation</span>
+                <span class="speaker abhinay">Abhinay</span>
+            </div>
+            <span class="visual-cue">Visual: Report Export</span>
+            <div class="lines">
+                "Since we had all these cool metrics from the whole team, I built an export feature so you can download a full Markdown report of your writing stats with just one click."
+            </div>
+        </div>
+
+        <div class="slide-card" id="s14">
+            <div class="slide-header">
+                <span class="slide-num">Slide 14: Final Conclusion</span>
+                <span class="speaker abhinay">Abhinay</span>
+            </div>
+            <span class="visual-cue">Visual: Team / Summary Shield</span>
+            <div class="lines">
+                "To wrap up, AetherWriter was a huge team effort where we managed to get advanced AI running smoothly on a local machine. It was a great learning experience for all of us."
+            </div>
+        </div>
+
+        <div class="slide-card" id="s15">
+            <div class="slide-header">
+                <span class="slide-num">Slide 15: Transition to Demo</span>
+                <span class="speaker prateek">Prateek</span>
+            </div>
+            <span class="visual-cue">Visual: Live Code Demo Slide</span>
+            <div class="lines">
+                "That wraps up our slides. Now, we're going to jump straight into the code to show you guys how we actually built this."
+            </div>
+        </div>
+
+        <!-- PART 2: CODE DEMONSTRATION -->
+        <div class="speaker-divider" style="color: var(--accent); border-top: 4px solid var(--accent); margin-top: 60px;">PART 2: LIVE CODEBASE DEMONSTRATION</div>
+
+        <!-- DEMO - PRATEEK -->
+        <div class="speaker-divider" style="color: var(--prateek)">PRATEEK (Demo Start)</div>
+        <div class="slide-card" id="demo1">
+            <div class="slide-header">
+                <span class="slide-num">Code Demo: System Setup</span>
+                <span class="speaker prateek">Prateek</span>
+            </div>
+            <span class="visual-cue">Visual: Open IDE - main.py</span>
+            <div class="lines">
+                "Alright, let's jump straight into the code. Like I mentioned in the architecture slide, our biggest goal was to guarantee privacy by running everything locally. If you look here in our <b>main.py</b> file, you can see how we're launching the FastAPI app. Notice this ThreadPoolExecutor right here—we needed that because running heavy NLP models can completely freeze a server. By passing the text to this async executor, we can run the AI offline perfectly using just the laptop's CPU, meaning literally zero data leaves your computer."
+            </div>
+        </div>
+
+        <!-- DEMO - SRINADH -->
+        <div class="speaker-divider" style="color: var(--srinadh)">SRINADH (Backend / Algorithm Demo)</div>
+        <div class="slide-card" id="demo2">
+            <div class="slide-header">
+                <span class="slide-num">Code Demo: API & Drift Logic</span>
+                <span class="speaker srinadh">Srinadh</span>
+            </div>
+            <span class="visual-cue">Visual: Open IDE - ml_service.py</span>
+            <div class="lines">
+                "Moving over to <b>ml_service.py</b>, let's look at the backend caching. Right here at the top, you'll see this 'self.cache' dictionary and its max size limit. Since AI models can lag, I built this so that if you type a sentence the system has already seen—bam—it fetches the exact result from this dictionary almost instantly in 0.08 milliseconds. And scrolling down inside the analyze loop, here is the backwards-mapping algorithm. By taking the array of grammar corrections and physically processing them in reverse index order, we effectively killed that 'Index Drift' bug that was misaligning all our text highlights."
+            </div>
+        </div>
+
+        <!-- DEMO - LAHARI -->
+        <div class="speaker-divider" style="color: var(--lahari)">LAHARI (Neural Core Demo)</div>
+        <div class="slide-card" id="demo3">
+            <div class="slide-header">
+                <span class="slide-num">Code Demo: PyTorch Loading</span>
+                <span class="speaker lahari">Lahari</span>
+            </div>
+            <span class="visual-cue">Visual: Open IDE - ml_service.py models</span>
+            <div class="lines">
+                "Also inside the `ml_service.py` file, you can see exactly where the Hybrid Core I mentioned comes to life. See these <b>AutoModelForSequenceClassification</b> functions? I wrote those to pull the trained BERT-Tiny weights specifically from our local `research_model` folder over on the left—so no cloud API. I also set up the training scripts that pushed our text dataset through that rigorous 5-Fold Cross-Validation cycle. It essentially splits the data, trains, and verifies five separate times to ensure our grammar AI's 98.9% accuracy isn't just a fluke."
+            </div>
+        </div>
+
+        <!-- DEMO - JYOSHNA -->
+        <div class="speaker-divider" style="color: var(--jyoshna)">JYOSHNA (Frontend / UI Demo)</div>
+        <div class="slide-card" id="demo4">
+            <div class="slide-header">
+                <span class="slide-num">Code Demo: React Stream</span>
+                <span class="speaker jyoshna">Jyoshna</span>
+            </div>
+            <span class="visual-cue">Visual: Open IDE - Frontend App.jsx</span>
+            <div class="lines">
+                "Switching over to the frontend codebase, here's our React setup in <b>App.jsx</b>. If you peek at `index.css`, you can trace the root CSS variables and backdrop-filters where I created that frosted glassmorphic look we showed earlier. But the critical part is in our React logic right here. Because Srinadh's backend is constantly firing off massive JSON arrays packed with grammar data, I wrote strict `useEffect` hooks to handle the stream. Instead of the entire webpage freezing or blinking every time you make a typo, React selectively injects the specific highlighted word, which keeps our RAM usage super low."
+            </div>
+        </div>
+
+        <!-- DEMO - HARSHIT -->
+        <div class="speaker-divider" style="color: var(--harshit)">HARSHIT (Structural Analytics Demo)</div>
+        <div class="slide-card" id="demo5">
+            <div class="slide-header">
+                <span class="slide-num">Code Demo: Linguistic Math</span>
+                <span class="speaker harshit">Harshit</span>
+            </div>
+            <span class="visual-cue">Visual: Open IDE - Analytics Code</span>
+            <div class="lines">
+                "Back in the python code, let me show you the analytics engine. Here at line 174 is the <b>analyze_readability</b> function. The math here explicitly counts syllable ratios to calculate the Flesch Reading Ease and Kincaid Grade level instantly. And if I scroll up to the `regex_rules` dictionary at line 80, this is the core of the Academic Tone Guard. There are dozens of regex patterns continuously watching for weak hedge words like 'perhaps' or casual slang. When it catches them, it instantly intercepts the data object to suggest a stronger, more formal tone."
+            </div>
+        </div>
+
+        <!-- DEMO - ABHINAY -->
+        <div class="speaker-divider" style="color: var(--abhinay)">ABHINAY (Subjectivity Demo)</div>
+        <div class="slide-card" id="demo6">
+            <div class="slide-header">
+                <span class="slide-num">Code Demo: Model Launch</span>
+                <span class="speaker abhinay">Abhinay</span>
+            </div>
+            <span class="visual-cue">Visual: Open Web Browser / App</span>
+            <div class="lines">
+                "To wrap up our code tour, take a look at the <b>analyze_sentiment</b> function right over here. This maps the 'polarity' and 'subjectivity' values to mathematically decide if a sentence is an angry emotional opinion or a nice neutral academic fact. Alright, enough code! Let's pull up our browser on `localhost` and actually run the app. Watch what happens as I type a bad sentence here... boom. Instant highlight, the cache hit registers, the sentiment score shifts, and the readability grade updates live. It all connects flawlessly. Thanks everyone for tuning into our project demo!"
+            </div>
+        </div>
+
+    </div>
+
+    <div class="nav-menu">
+        <a href="#s1" class="nav-item">Prateek</a>
+        <a href="#s4" class="nav-item">Srinadh</a>
+        <a href="#s6" class="nav-item">Lahari</a>
+        <a href="#s8" class="nav-item">Jyoshna</a>
+        <a href="#s10" class="nav-item">Harshit</a>
+        <a href="#s12" class="nav-item">Abhinay</a>
+        <a href="#demo1" class="nav-item">Demo Start</a>
+    </div>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.3
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    const navItems = {
+                        's1': 'Prateek', 's2': 'Prateek', 's3': 'Prateek',
+                        's4': 'Srinadh', 's5': 'Srinadh',
+                        's6': 'Lahari', 's7': 'Lahari',
+                        's8': 'Jyoshna', 's9': 'Jyoshna',
+                        's10': 'Harshit', 's11': 'Harshit',
+                        's12': 'Abhinay', 's13': 'Abhinay', 's14': 'Abhinay',
+                        's15': 'Prateek',
+                        'demo1': 'Prateek', 'demo2': 'Srinadh', 'demo3': 'Lahari',
+                        'demo4': 'Jyoshna', 'demo5': 'Harshit', 'demo6': 'Abhinay'
+                    };
+                    const activeSpeaker = navItems[id];
+                    document.querySelectorAll('.nav-item').forEach(nav => {
+                        nav.classList.toggle('active', nav.innerText === activeSpeaker);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.slide-card').forEach(card => observer.observe(card));
+    </script>
+</body>
+</html>
